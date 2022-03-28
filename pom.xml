@@ -57,5 +57,6 @@
   </build>
   <modules>
   	<module>Customer</module>
+  	<module>fraud</module>
   </modules>
 </project>
