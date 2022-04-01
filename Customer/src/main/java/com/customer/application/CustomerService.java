@@ -15,13 +15,16 @@ public class CustomerService {
 		Customer customer = Customer.builder().firstName(customerRegistrationRequest.firstName())
 				 .lastName(customerRegistrationRequest.lastName())
 				 .email(customerRegistrationRequest.email()).build();
-		FraudCheckResponse fraudCheckResponse = null;
+
 		customerRepository.saveAndFlush(customer);
+		FraudCheckResponse fraudCheckResponse = null;
 		 fraudCheckResponse = restTemplate.getForObject(
-				"http://localhost:8081/api/v1/fraud-check/{customerId}",
+				"http://FRAUD/api/v1/fraud-check/{customerId}",
 				FraudCheckResponse.class,
 				customer.getId()
 			);
+		
+	//FraudCheckResponse fraudCheckResponse = fraudCheckClient.isFraudCustomer(customer.getId());
 		
 		if(fraudCheckResponse.isFraudulentCustomer()) {
 			throw new IllegalStateException("Fradulent Customer");
